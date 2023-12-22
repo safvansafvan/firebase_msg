@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "26884012601",
+    "project_id": "fir-msg-eea10",
+    "storage_bucket": "fir-msg-eea10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26884012601:android:da9a1851c16cdd1dfa6be8",
+        "android_client_info": {
+          "package_name": "com.saf.firebase_msg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdkJGZBjGzIey5lqkdTTdHT4FZy3KKyS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
