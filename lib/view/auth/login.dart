@@ -3,8 +3,11 @@ import 'package:firebase_msg/view/widget/text_form_common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+  LoginView({super.key});
+
+  GlobalKey<FormState> gkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +76,7 @@ class LoginView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Form(
+                            key: gkey,
                             child: Column(
                               children: [
                                 TextFormFieldCmn(
@@ -114,5 +118,9 @@ class LoginView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> handleSignIn() async {
+    Get.put(LoginCtrl());
   }
 }

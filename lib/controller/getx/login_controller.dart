@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_msg/utils/msg_bar.dart';
 import 'package:firebase_msg/view/auth/login.dart';
+import 'package:firebase_msg/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +30,6 @@ class LoginCtrl extends GetxController {
     return null;
   }
 
-//signin with email and password ***************************************************************
   bool isSignInLoading = false;
   Future<User?> signInWithEmailAndPasswords(
       String email, String password) async {
@@ -55,12 +55,26 @@ class LoginCtrl extends GetxController {
       await auth.signOut();
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const LoginView()),
+        MaterialPageRoute(builder: (context) => LoginView()),
         (route) => false,
       );
       showMsgBar(msg: 'Logout');
     } catch (e) {
       log('Error during logout: $e');
     }
+  }
+
+  handleScreens(context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return const HomeView();
+    } else {
+      return LoginView();
+    }
+  }
+
+  void clearController() {
+    passCtrl.clear();
+    emailCtrl.clear();
   }
 }
