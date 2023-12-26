@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:firebase_msg/utils/msg_bar.dart';
-import 'package:firebase_msg/view/auth/login.dart';
+import 'package:firebase_msg/view/auth/signin.dart';
 import 'package:firebase_msg/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +12,12 @@ class LoginCtrl extends GetxController {
   TextEditingController emailCtrl = TextEditingController();
   TextEditingController passCtrl = TextEditingController();
   bool isSignUpLoading = false;
+  RxBool passwordVisible = true.obs;
+
+  void showPassword() {
+    passwordVisible.value = !passwordVisible.value;
+  }
+
   Future<User?> signUpWithEmailAndPassword(
       String email, String password) async {
     isSignUpLoading = true;
