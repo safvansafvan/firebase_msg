@@ -14,17 +14,13 @@ class AuthCtrl extends GetxController {
   TextEditingController emailCtrl = TextEditingController();
   TextEditingController nameCtrl = TextEditingController();
   TextEditingController passCtrl = TextEditingController();
-  RxBool isSignUpLoading = false.obs;
   RxBool passwordVisible = true.obs;
 
   void showPassword() {
     passwordVisible.value = !passwordVisible.value;
   }
 
-  Future<String> signUpWithEmailAndPassword(
-      String email, String password) async {
-    String result = '';
-    isSignUpLoading = true.obs;
+  Future<void> signUpWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential credential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -43,8 +39,6 @@ class AuthCtrl extends GetxController {
           email: email,
           url: userModel.photoUrl));
       await Get.put(StorageCtrl().addUserToStorage(model: userModel));
-
-      result = 'success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         showMsgBar(msg: 'Password provided is too weak');
@@ -54,15 +48,10 @@ class AuthCtrl extends GetxController {
         showMsgBar(msg: e.code);
       }
     }
-    isSignUpLoading = false.obs;
-    return result;
   }
 
-  RxBool isSignInLoading = false.obs;
-  Future<String> signInWithEmailAndPasswords(
-      String email, String password) async {
-    isSignInLoading = true.obs;
-    String result = '';
+  Future<void> signInWithEmailAndPasswords(
+      String email, String password, context) async {
     try {
       UserCredential credential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -76,11 +65,16 @@ class AuthCtrl extends GetxController {
             'https://www.google.com/search?q=person+image+icon+cartoon&tbm=isch&ved=2ahUKEwjmt86Lp6-DAxUPhWMGHehQBYMQ2-cCegQIABAA&oq=person+image+icon+cartoon&gs_lcp=CgNpbWcQAzoECCMQJzoFCAAQgAQ6BggAEAcQHjoECAAQHjoGCAAQBRAeUI0OWMFEYNdHaABwAHgAgAGMAogBsAqSAQUyLjYuMZgBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=mO6LZeaLM4-KjuMP6KGVmAg&bih=695&biw=1536&rlz=1C1GCEA_enIN1068IN1068#imgrc=rVZxRvz_V5N2fM',
       );
       await Get.put(StorageCtrl().setStorageData(
-          uid: uid,
-          name: userModel.userName,
-          email: email,
-          url: userModel.photoUrl));
-      result = 'success';
+              uid: uid,
+              name: userModel.userName,
+              email: email,
+              url: userModel.photoUrl))
+          .then((value) => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeView(),
+              ),
+              (route) => false));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         showMsgBar(msg: 'Password provided is too weak');
@@ -90,8 +84,6 @@ class AuthCtrl extends GetxController {
         showMsgBar(msg: e.code);
       }
     }
-    isSignInLoading = false.obs;
-    return result;
   }
 
   Future<void> logout(context) async {

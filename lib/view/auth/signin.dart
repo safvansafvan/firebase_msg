@@ -2,7 +2,6 @@ import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/controller/getx/connectivity_controller.dart';
 import 'package:firebase_msg/controller/utils/msg_bar.dart';
 import 'package:firebase_msg/view/auth/signUp.dart';
-import 'package:firebase_msg/view/home.dart';
 import 'package:firebase_msg/view/widget/text_form_common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -163,14 +162,8 @@ class LoginView extends StatelessWidget {
       String email = sc.emailCtrl.text.trim();
       String password = sc.passCtrl.text;
       await sc
-          .signInWithEmailAndPasswords(email, password)
-          .then((value) => sc.clearController())
-          .then((value) => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomeView(),
-              ),
-              (route) => false));
+          .signInWithEmailAndPasswords(email, password, context)
+          .then((value) => sc.clearController());
     }
   }
 }
