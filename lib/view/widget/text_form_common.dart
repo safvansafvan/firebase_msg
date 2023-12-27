@@ -1,4 +1,4 @@
-import 'package:firebase_msg/controller/getx/login_controller.dart';
+import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,8 +17,8 @@ class TextFormFieldCmn extends StatelessWidget {
   final bool isPass;
   @override
   Widget build(BuildContext context) {
-    final ctrl = Get.put(LoginCtrl());
-    final suffix = Get.put(LoginCtrl().passwordVisible.value);
+    final ctrl = Get.put(AuthCtrl());
+    final suffix = Get.put(AuthCtrl().passwordVisible.value);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: TextFormField(

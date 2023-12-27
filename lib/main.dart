@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_msg/controller/getx/login_controller.dart';
+import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginCtrl ctrl = LoginCtrl();
+    AuthCtrl ctrl = AuthCtrl();
     return GetMaterialApp(
       title: 'chat app',
       theme: ThemeData(

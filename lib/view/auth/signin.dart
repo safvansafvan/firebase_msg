@@ -1,6 +1,6 @@
+import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/controller/getx/connectivity_controller.dart';
-import 'package:firebase_msg/controller/getx/login_controller.dart';
-import 'package:firebase_msg/utils/msg_bar.dart';
+import 'package:firebase_msg/controller/utils/msg_bar.dart';
 import 'package:firebase_msg/view/auth/signUp.dart';
 import 'package:firebase_msg/view/home.dart';
 import 'package:firebase_msg/view/widget/text_form_common.dart';
@@ -15,7 +15,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lc = Get.put(LoginCtrl());
+    final lc = Get.put(AuthCtrl());
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -153,7 +153,7 @@ class LoginView extends StatelessWidget {
   }
 
   Future<void> handleSignIn(context) async {
-    final sc = Get.put(LoginCtrl());
+    final sc = Get.put(AuthCtrl());
     final ic = Get.put(ConnectivityCtrl());
     await ic.checkConnection();
 

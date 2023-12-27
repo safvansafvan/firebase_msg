@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
                 ),
                 child: const SafeArea(
                     child: Padding(
-                  padding: EdgeInsets.only(top: 38.0, left: 20),
+                  padding: EdgeInsets.only(top: 30.0, left: 20),
                   child: Text(
                     'Chats',
                     style: TextStyle(
@@ -45,7 +45,8 @@ class HomeView extends StatelessWidget {
                   itemCount: 20,
                   itemBuilder: (context, index) {
                     return Container(
-                      child: ListTile(
+                      margin: const EdgeInsets.symmetric(horizontal: 7),
+                      child: const ListTile(
                         leading: CircleAvatar(),
                         title: Text('Username'),
                         subtitle: Text('text'),
