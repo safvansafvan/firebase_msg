@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class LoginCtrl extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController emailCtrl = TextEditingController();
+  TextEditingController nameCtrl = TextEditingController();
   TextEditingController passCtrl = TextEditingController();
   bool isSignUpLoading = false;
   RxBool passwordVisible = true.obs;

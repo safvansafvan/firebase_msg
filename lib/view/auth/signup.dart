@@ -2,6 +2,7 @@ import 'package:firebase_msg/controller/getx/connectivity_controller.dart';
 import 'package:firebase_msg/controller/getx/login_controller.dart';
 import 'package:firebase_msg/utils/msg_bar.dart';
 import 'package:firebase_msg/view/auth/signin.dart';
+import 'package:firebase_msg/view/home.dart';
 import 'package:firebase_msg/view/widget/text_form_common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -84,7 +85,7 @@ class SignUpView extends StatelessWidget {
                               child: Column(
                                 children: [
                                   TextFormFieldCmn(
-                                    controller: lc.emailCtrl,
+                                    controller: lc.nameCtrl,
                                     labelText: 'Username',
                                     prefixIcn: Icons.person,
                                   ),
@@ -103,7 +104,7 @@ class SignUpView extends StatelessWidget {
                                   const SizedBox(height: 20),
                                   ElevatedButton(
                                       onPressed: () async {
-                                        await handleSignUp();
+                                        await handleSignUp(context);
                                       },
                                       child: const Text('SignUp'))
                                 ],
@@ -143,7 +144,7 @@ class SignUpView extends StatelessWidget {
     );
   }
 
-  Future<void> handleSignUp() async {
+  Future<void> handleSignUp(context) async {
     final sc = Get.put(LoginCtrl());
     final ic = Get.put(ConnectivityCtrl());
     await ic.checkConnection();
@@ -155,7 +156,13 @@ class SignUpView extends StatelessWidget {
         String password = sc.passCtrl.text;
         await sc
             .signUpWithEmailAndPassword(email, password)
-            .then((value) => sc.clearController());
+            .then((value) => sc.clearController())
+            .then((value) => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomeView(),
+                ),
+                (route) => false));
       }
     } else {
       showMsgBar(msg: 'Empty Fields');

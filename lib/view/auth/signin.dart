@@ -2,6 +2,7 @@ import 'package:firebase_msg/controller/getx/connectivity_controller.dart';
 import 'package:firebase_msg/controller/getx/login_controller.dart';
 import 'package:firebase_msg/utils/msg_bar.dart';
 import 'package:firebase_msg/view/auth/signUp.dart';
+import 'package:firebase_msg/view/home.dart';
 import 'package:firebase_msg/view/widget/text_form_common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -108,7 +109,7 @@ class LoginView extends StatelessWidget {
                                   ElevatedButton(
                                       onPressed: () async {
                                         if (gkey.currentState!.validate()) {
-                                          await handleSignIn();
+                                          await handleSignIn(context);
                                         } else {
                                           showMsgBar(msg: 'Empty Fields');
                                         }
@@ -151,7 +152,7 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  Future<void> handleSignIn() async {
+  Future<void> handleSignIn(context) async {
     final sc = Get.put(LoginCtrl());
     final ic = Get.put(ConnectivityCtrl());
     await ic.checkConnection();
@@ -163,7 +164,13 @@ class LoginView extends StatelessWidget {
       String password = sc.passCtrl.text;
       await sc
           .signInWithEmailAndPasswords(email, password)
-          .then((value) => sc.clearController());
+          .then((value) => sc.clearController())
+          .then((value) => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeView(),
+              ),
+              (route) => false));
     }
   }
 }
