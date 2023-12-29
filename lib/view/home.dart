@@ -1,14 +1,28 @@
 import 'package:firebase_msg/controller/getx/auth_controller.dart';
+import 'package:firebase_msg/controller/getx/storage_ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final ac = Get.put(AuthCtrl());
+  final StorageCtrl sc = Get.put(StorageCtrl());
+  @override
+  void initState() {
+    sc.getAllUsers();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    final ac = Get.put(AuthCtrl());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
@@ -38,27 +52,39 @@ class HomeView extends StatelessWidget {
                 )),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 100),
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20))),
-                child: ListView.builder(
-                  itemCount: 20,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 7),
-                      child: const ListTile(
-                        leading: CircleAvatar(),
-                        title: Text('Username'),
-                        subtitle: Text('text'),
-                        trailing: Text('Date'),
-                      ),
-                    );
-                  },
-                ),
-              ),
+                  margin: const EdgeInsets.only(top: 100),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
+                  child: Obx(
+                    () => ListView.builder(
+                      itemCount: sc.allUsers.length,
+                      itemBuilder: (context, index) {
+                        final allUsers = sc.allUsers[index];
+                        return Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 7),
+                          child: ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(60),
+                              child: Image.asset(
+                                'assets/im.jpg',
+                                height: 65,
+                                width: 65,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            title: Text(
+                              allUsers.name,
+                            ),
+                            subtitle: Text(allUsers.email),
+                            trailing: const Text('Date'),
+                          ),
+                        );
+                      },
+                    ),
+                  ))
             ],
           ),
         ),
