@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,15 +7,19 @@ class TextFormFieldCmn extends StatelessWidget {
   const TextFormFieldCmn(
       {super.key,
       required this.controller,
-      this.prefixIcn,
-      this.suffixIcn,
       required this.labelText,
-      this.isPass = false});
+      this.isEmail = false,
+      this.isPass = false,
+      this.prefixIcn,
+      this.suffixIcn});
+
   final TextEditingController controller;
   final IconData? prefixIcn;
   final IconData? suffixIcn;
   final String labelText;
   final bool isPass;
+  final bool isEmail;
+
   @override
   Widget build(BuildContext context) {
     final ctrl = Get.put(AuthCtrl());
@@ -23,8 +28,15 @@ class TextFormFieldCmn extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: TextFormField(
         validator: (value) {
-          if (value!.isEmpty) {
-            return 'Required';
+          if (isPass) {
+            if (value == null || value.isEmpty) {
+              return "Password is required";
+            }
+          }
+          if (isEmail) {
+            if (value != null && !EmailValidator.validate(value)) {
+              return "Enter valid email";
+            }
           }
           return null;
         },

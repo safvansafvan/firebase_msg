@@ -25,6 +25,7 @@ showModelBottomSheet(BuildContext context) {
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
               const SizedBox(height: 10),
               TextFormFieldCmn(
+                  isEmail: true,
                   prefixIcn: Icons.email,
                   controller: ac.forgotPasswordCtrl,
                   labelText: 'Email'),

@@ -93,6 +93,7 @@ class SignUpView extends StatelessWidget {
                                     controller: lc.emailCtrl,
                                     labelText: 'Email',
                                     prefixIcn: Icons.email,
+                                    isEmail: true,
                                   ),
                                   TextFormFieldCmn(
                                     controller: lc.passCtrl,
