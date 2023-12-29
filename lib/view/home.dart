@@ -1,4 +1,6 @@
+import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -6,6 +8,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
+    final ac = Get.put(AuthCtrl());
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
@@ -59,6 +62,11 @@ class HomeView extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton.small(
+        onPressed: () async {
+          await ac.logout(context);
+        },
       ),
     );
   }

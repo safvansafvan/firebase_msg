@@ -154,19 +154,16 @@ class SignUpView extends StatelessWidget {
       } else {
         String email = sc.emailCtrl.text.trim();
         String password = sc.passCtrl.text;
-        String rs = await sc
+        await sc
             .signUpWithEmailAndPassword(email, password)
             .then((value) => sc.clearController());
-        if (rs == 'success') {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomeView(),
-              ),
-              (route) => false);
-        } else {
-          showMsgBar(msg: 'Wrong');
-        }
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeView(),
+            ),
+            (route) => false);
       }
     } else {
       showMsgBar(msg: 'Empty Fields');

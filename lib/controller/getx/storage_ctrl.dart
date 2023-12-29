@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_msg/controller/utils/msg_bar.dart';
 import 'package:firebase_msg/model/user_model.dart';
@@ -23,6 +24,7 @@ class StorageCtrl extends GetxController {
       await firestore.collection('users').doc(model.uid).set(model.toJson());
     } catch (e) {
       showMsgBar(msg: 'Wrong');
+      log(e.toString());
     }
   }
 }

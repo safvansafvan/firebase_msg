@@ -113,5 +113,6 @@ class AuthCtrl extends GetxController {
   clearController() {
     passCtrl.clear();
     emailCtrl.clear();
+    nameCtrl.clear();
   }
 }
