@@ -2,6 +2,7 @@ import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/controller/getx/connectivity_controller.dart';
 import 'package:firebase_msg/controller/utils/msg_bar.dart';
 import 'package:firebase_msg/view/auth/signUp.dart';
+import 'package:firebase_msg/view/widget/forgot_password_pop.dart';
 import 'package:firebase_msg/view/widget/text_form_common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -98,7 +99,9 @@ class LoginView extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.topRight,
                                     child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        showModelBottomSheet(context);
+                                      },
                                       child: const Text(
                                         'Forgot password ?',
                                       ),

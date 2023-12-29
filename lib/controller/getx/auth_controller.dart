@@ -86,6 +86,21 @@ class AuthCtrl extends GetxController {
     }
   }
 
+  TextEditingController forgotPasswordCtrl = TextEditingController();
+  Future<void> forgotPassword(context) async {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: forgotPasswordCtrl.text.trim())
+          .then((value) {
+        Navigator.pop(context);
+        forgotPasswordCtrl.clear();
+        showMsgBar(msg: 'Check Email Inbox');
+      });
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   Future<void> logout(context) async {
     try {
       await FirebaseAuth.instance.signOut();
