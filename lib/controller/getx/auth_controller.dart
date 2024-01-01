@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_msg/controller/getx/storage_ctrl.dart';
 import 'package:firebase_msg/controller/utils/msg_bar.dart';
 import 'package:firebase_msg/model/user_model.dart';
@@ -24,18 +25,13 @@ class AuthCtrl extends GetxController {
       UserCredential credential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       String uid = credential.user!.uid;
-      UserModel userModel = UserModel(
-        uid: uid,
-        email: email,
-        userName: nameCtrl.text,
-        photoUrl:
-            'https://www.google.com/search?q=person+image+icon+cartoon&tbm=isch&ved=2ahUKEwjmt86Lp6-DAxUPhWMGHehQBYMQ2-cCegQIABAA&oq=person+image+icon+cartoon&gs_lcp=CgNpbWcQAzoECCMQJzoFCAAQgAQ6BggAEAcQHjoECAAQHjoGCAAQBRAeUI0OWMFEYNdHaABwAHgAgAGMAogBsAqSAQUyLjYuMZgBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=mO6LZeaLM4-KjuMP6KGVmAg&bih=695&biw=1536&rlz=1C1GCEA_enIN1068IN1068#imgrc=rVZxRvz_V5N2fM',
-      );
+      UserModel userModel =
+          UserModel(uid: uid, email: email, userName: nameCtrl.text);
       await Get.put(StorageCtrl().setStorageData(
-          uid: uid,
-          userName: userModel.userName,
-          email: email,
-          url: userModel.photoUrl));
+        uid: uid,
+        userName: userModel.userName,
+        email: email,
+      ));
       await Get.put(StorageCtrl().addUserToStorage(model: userModel));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -51,21 +47,19 @@ class AuthCtrl extends GetxController {
   Future<void> signInWithEmailAndPasswords(
       String email, String password, context) async {
     try {
+      QuerySnapshot querySnapshot = await getUserByEmail(email);
+      String name = querySnapshot.docs[0]['user_name'];
+
       UserCredential credential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       String uid = credential.user!.uid;
-      UserModel userModel = UserModel(
+      UserModel(
         uid: uid,
         email: email,
-        userName: nameCtrl.text,
-        photoUrl:
-            'https://www.google.com/search?q=person+image+icon+cartoon&tbm=isch&ved=2ahUKEwjmt86Lp6-DAxUPhWMGHehQBYMQ2-cCegQIABAA&oq=person+image+icon+cartoon&gs_lcp=CgNpbWcQAzoECCMQJzoFCAAQgAQ6BggAEAcQHjoECAAQHjoGCAAQBRAeUI0OWMFEYNdHaABwAHgAgAGMAogBsAqSAQUyLjYuMZgBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=mO6LZeaLM4-KjuMP6KGVmAg&bih=695&biw=1536&rlz=1C1GCEA_enIN1068IN1068#imgrc=rVZxRvz_V5N2fM',
+        userName: name,
       );
-      await Get.put(StorageCtrl().setStorageData(
-          uid: uid,
-          userName: userModel.userName,
-          email: email,
-          url: userModel.photoUrl));
+      await Get.put(
+          StorageCtrl().setStorageData(uid: uid, userName: name, email: email));
       await Get.put(StorageCtrl())
           .getPrefData()
           .then((value) => Navigator.pushAndRemoveUntil(
@@ -127,5 +121,11 @@ class AuthCtrl extends GetxController {
     passCtrl.clear();
     emailCtrl.clear();
     nameCtrl.clear();
+  }
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future<QuerySnapshot> getUserByEmail(String email) async {
+    return firestore.collection('user').where('email', isEqualTo: email).get();
   }
 }

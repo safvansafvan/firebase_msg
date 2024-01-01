@@ -1,7 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_msg/controller/getx/storage_ctrl.dart';
+import 'package:firebase_msg/model/user_model.dart';
+import 'package:firebase_msg/view/widget/chat_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ChatView extends StatelessWidget {
-  const ChatView({super.key});
+class ChatView extends StatefulWidget {
+  const ChatView({super.key, required this.user, required this.chatRoomId});
+  final UserModel user;
+  final String chatRoomId;
+
+  @override
+  State<ChatView> createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
+  final sc = Get.put(StorageCtrl());
+  @override
+  void initState() {
+    sc.getMessageStream(chatRoomId: widget.chatRoomId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +79,51 @@ class ChatView extends StatelessWidget {
                   topRight: Radius.circular(20),
                 ),
               ),
+              child: Obx(() => Column(
+                    children: [
+                      Expanded(
+                          child: StreamBuilder(
+                        stream: sc.messageStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: CircularProgressIndicator.adaptive(
+                                  strokeWidth: 3,
+                                ),
+                              ),
+                            );
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.docs.isEmpty) {
+                            return Center(
+                              child: Text(
+                                'No Chats',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            );
+                          }
+                          return ListView.separated(
+                              reverse: true,
+                              itemBuilder: (context, index) {
+                                QueryDocumentSnapshot<Map<String, dynamic>>
+                                    snap = snapshot.data!.docs[index];
+                                return ChatCard(snap: snap);
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 5),
+                              itemCount: snapshot.data!.docs.length);
+                        },
+                      ))
+                    ],
+                  )),
             ),
             Positioned(
               bottom: 2,

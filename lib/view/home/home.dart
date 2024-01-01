@@ -89,6 +89,7 @@ class _HomeViewState extends State<HomeView> {
                           itemCount: sc.allUsers.length,
                           itemBuilder: (context, index) {
                             final allUsers = sc.allUsers[index];
+
                             return Container(
                               margin: const EdgeInsets.symmetric(horizontal: 7),
                               child: ListTile(
@@ -115,13 +116,32 @@ class _HomeViewState extends State<HomeView> {
                                     ? null
                                     : Text(allUsers.email),
                                 trailing: const Text('Date'),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const ChatView(),
-                                    ),
+                                onTap: () async {
+                                  String chatRoomId =
+                                      sc.getChatRoomIdByUserName(
+                                    currentUserName:
+                                        sc.userDetails['name'] ?? '',
+                                    chatingUserName: allUsers.userName,
                                   );
+                                  Map<String, dynamic> chatRoomInfoMap = {
+                                    "users": [
+                                      sc.userDetails['user_name'],
+                                      allUsers.userName
+                                    ]
+                                  };
+                                  await sc.createChatRoom(
+                                      chatRoomId: chatRoomId,
+                                      chatRoomInfoMap: chatRoomInfoMap);
+                                  if (context.mounted) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatView(
+                                            user: allUsers,
+                                            chatRoomId: chatRoomId),
+                                      ),
+                                    );
+                                  }
                                 },
                               ),
                             );
