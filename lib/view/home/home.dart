@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/controller/getx/storage_ctrl.dart';
 import 'package:firebase_msg/view/chat/chat.dart';
@@ -79,39 +80,54 @@ class _HomeViewState extends State<HomeView> {
                     topRight: Radius.circular(20),
                   ),
                 ),
-                child: Obx(() => (sc.isLoadingGet.isTrue)
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ListView.builder(
-                        itemCount: sc.allUsers.length,
-                        itemBuilder: (context, index) {
-                          final allUsers = sc.allUsers[index];
-                          return Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 7),
-                            child: ListTile(
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(60),
-                                child: Image.asset('assets/im.jpg',
-                                    height: 65, width: 65, fit: BoxFit.cover),
+                child: Obx(
+                  () => (sc.isLoadingGet.isTrue)
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          itemCount: sc.allUsers.length,
+                          itemBuilder: (context, index) {
+                            final allUsers = sc.allUsers[index];
+                            return Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 7),
+                              child: ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(60),
+                                  child: Image.asset('assets/im.jpg',
+                                      height: 65, width: 65, fit: BoxFit.cover),
+                                ),
+                                title: allUsers.uid ==
+                                        FirebaseAuth.instance.currentUser!.uid
+                                    ? Wrap(
+                                        children: [
+                                          Text(
+                                            allUsers.userName,
+                                          ),
+                                          const Text(' [You]')
+                                        ],
+                                      )
+                                    : Text(
+                                        allUsers.userName,
+                                      ),
+                                subtitle: allUsers.uid ==
+                                        FirebaseAuth.instance.currentUser!.uid
+                                    ? null
+                                    : Text(allUsers.email),
+                                trailing: const Text('Date'),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const ChatView(),
+                                    ),
+                                  );
+                                },
                               ),
-                              title: Text(
-                                allUsers.userName,
-                              ),
-                              subtitle: Text(allUsers.email),
-                              trailing: const Text('Date'),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const ChatView(),
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      )),
+                            );
+                          },
+                        ),
+                ),
               )
             ],
           ),

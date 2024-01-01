@@ -36,7 +36,7 @@ class ChatView extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(60),
                         child: Image.asset('assets/im.jpg',
-                            height: 55, width: 55, fit: BoxFit.cover),
+                            height: 50, width: 50, fit: BoxFit.cover),
                       ),
                       const SizedBox(width: 4),
                       const Text(

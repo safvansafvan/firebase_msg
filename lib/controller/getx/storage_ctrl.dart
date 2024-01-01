@@ -30,23 +30,27 @@ class StorageCtrl extends GetxController {
   }
 
   RxBool isLoadingGet = false.obs;
+
   Future<void> getAllUsers() async {
-    isLoadingGet = true.obs;
-    QuerySnapshot<Map<String, dynamic>> querySnapshot = await users();
-    allUsers.clear();
-    for (QueryDocumentSnapshot<Map<String, dynamic>> document
-        in querySnapshot.docs) {
-      Map<String, dynamic> data = document.data();
-      allUsers.add(
-        UserModel(
-          uid: data['uid'],
-          email: data['email'],
-          userName: data['user_name'],
-          photoUrl: data['photo_url'],
-        ),
-      );
+    isLoadingGet.value = true;
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await users();
+      allUsers.clear();
+      for (QueryDocumentSnapshot<Map<String, dynamic>> document
+          in querySnapshot.docs) {
+        Map<String, dynamic> data = document.data();
+        allUsers.add(
+          UserModel(
+            uid: data['uid'],
+            email: data['email'],
+            userName: data['user_name'],
+            photoUrl: data['photo_url'],
+          ),
+        );
+      }
+    } finally {
+      isLoadingGet.value = false;
     }
-    isLoadingGet = false.obs;
     update();
   }
 
