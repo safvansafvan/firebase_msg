@@ -1,5 +1,6 @@
 import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/controller/getx/storage_ctrl.dart';
+import 'package:firebase_msg/view/chat/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,16 +40,17 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
                 child: const SafeArea(
-                    child: Padding(
-                  padding: EdgeInsets.only(top: 30.0, left: 20, right: 20),
-                  child: Text(
-                    'Chats',
-                    style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 30.0, left: 20, right: 20),
+                    child: Text(
+                      'Chats',
+                      style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                )),
+                ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 100),
@@ -74,19 +76,22 @@ class _HomeViewState extends State<HomeView> {
                           child: ListTile(
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(60),
-                              child: Image.asset(
-                                'assets/im.jpg',
-                                height: 65,
-                                width: 65,
-                                fit: BoxFit.cover,
-                              ),
+                              child: Image.asset('assets/im.jpg',
+                                  height: 65, width: 65, fit: BoxFit.cover),
                             ),
                             title: Text(
                               allUsers.name,
                             ),
                             subtitle: Text(allUsers.email),
                             trailing: const Text('Date'),
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ChatView(),
+                                ),
+                              );
+                            },
                           ),
                         );
                       },
@@ -97,11 +102,6 @@ class _HomeViewState extends State<HomeView> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.small(
-        onPressed: () async {
-          await ac.logout(context);
-        },
       ),
     );
   }
