@@ -26,7 +26,6 @@ class AuthCtrl extends GetxController {
       String uid = credential.user!.uid;
       UserModel userModel = UserModel(
         uid: uid,
-        name: nameCtrl.text,
         email: email,
         userName: nameCtrl.text,
         photoUrl:
@@ -34,7 +33,7 @@ class AuthCtrl extends GetxController {
       );
       await Get.put(StorageCtrl().setStorageData(
           uid: uid,
-          name: userModel.userName,
+          userName: userModel.userName,
           email: email,
           url: userModel.photoUrl));
       await Get.put(StorageCtrl().addUserToStorage(model: userModel));
@@ -57,17 +56,18 @@ class AuthCtrl extends GetxController {
       String uid = credential.user!.uid;
       UserModel userModel = UserModel(
         uid: uid,
-        name: nameCtrl.text,
         email: email,
         userName: nameCtrl.text,
         photoUrl:
             'https://www.google.com/search?q=person+image+icon+cartoon&tbm=isch&ved=2ahUKEwjmt86Lp6-DAxUPhWMGHehQBYMQ2-cCegQIABAA&oq=person+image+icon+cartoon&gs_lcp=CgNpbWcQAzoECCMQJzoFCAAQgAQ6BggAEAcQHjoECAAQHjoGCAAQBRAeUI0OWMFEYNdHaABwAHgAgAGMAogBsAqSAQUyLjYuMZgBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=mO6LZeaLM4-KjuMP6KGVmAg&bih=695&biw=1536&rlz=1C1GCEA_enIN1068IN1068#imgrc=rVZxRvz_V5N2fM',
       );
       await Get.put(StorageCtrl().setStorageData(
-              uid: uid,
-              name: userModel.userName,
-              email: email,
-              url: userModel.photoUrl))
+          uid: uid,
+          userName: userModel.userName,
+          email: email,
+          url: userModel.photoUrl));
+      await Get.put(StorageCtrl())
+          .getPrefData()
           .then((value) => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(

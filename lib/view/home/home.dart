@@ -1,6 +1,7 @@
 import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/controller/getx/storage_ctrl.dart';
 import 'package:firebase_msg/view/chat/chat.dart';
+import 'package:firebase_msg/view/user_profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +31,7 @@ class _HomeViewState extends State<HomeView> {
           child: Stack(
             children: [
               Container(
-                height: screenSize.height / 5.5,
+                height: screenSize.height / 7.5,
                 width: screenSize.width,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -39,15 +40,32 @@ class _HomeViewState extends State<HomeView> {
                     end: AlignmentDirectional.bottomEnd,
                   ),
                 ),
-                child: const SafeArea(
+                child: SafeArea(
                   child: Padding(
-                    padding: EdgeInsets.only(top: 30.0, left: 20, right: 20),
-                    child: Text(
-                      'Chats',
-                      style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Chats',
+                          style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const UserProfileView(),
+                                  ));
+                            },
+                            icon: const Icon(Icons.person,
+                                color: Colors.white, size: 40))
+                      ],
                     ),
                   ),
                 ),
@@ -61,43 +79,39 @@ class _HomeViewState extends State<HomeView> {
                     topRight: Radius.circular(20),
                   ),
                 ),
-                child: Obx(() {
-                  if (sc.isLoadingGet.isTrue) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return ListView.builder(
-                      itemCount: sc.allUsers.length,
-                      itemBuilder: (context, index) {
-                        final allUsers = sc.allUsers[index];
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 7),
-                          child: ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(60),
-                              child: Image.asset('assets/im.jpg',
-                                  height: 65, width: 65, fit: BoxFit.cover),
+                child: Obx(() => (sc.isLoadingGet.isTrue)
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.builder(
+                        itemCount: sc.allUsers.length,
+                        itemBuilder: (context, index) {
+                          final allUsers = sc.allUsers[index];
+                          return Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 7),
+                            child: ListTile(
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(60),
+                                child: Image.asset('assets/im.jpg',
+                                    height: 65, width: 65, fit: BoxFit.cover),
+                              ),
+                              title: Text(
+                                allUsers.userName,
+                              ),
+                              subtitle: Text(allUsers.email),
+                              trailing: const Text('Date'),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ChatView(),
+                                  ),
+                                );
+                              },
                             ),
-                            title: Text(
-                              allUsers.name,
-                            ),
-                            subtitle: Text(allUsers.email),
-                            trailing: const Text('Date'),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ChatView(),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  }
-                }),
+                          );
+                        },
+                      )),
               )
             ],
           ),

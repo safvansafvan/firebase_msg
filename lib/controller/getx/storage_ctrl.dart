@@ -8,12 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class StorageCtrl extends GetxController {
   Future<void> setStorageData(
       {required String uid,
-      required String name,
+      required String userName,
       required String email,
       required String url}) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     await storage.setString('uid', uid);
-    await storage.setString('name', name);
+    await storage.setString('userName', userName);
     await storage.setString('email', email);
     await storage.setString('url', url);
   }
@@ -37,11 +37,9 @@ class StorageCtrl extends GetxController {
     for (QueryDocumentSnapshot<Map<String, dynamic>> document
         in querySnapshot.docs) {
       Map<String, dynamic> data = document.data();
-      log(allUsers.length.toString());
       allUsers.add(
         UserModel(
           uid: data['uid'],
-          name: data['name'],
           email: data['email'],
           userName: data['user_name'],
           photoUrl: data['photo_url'],
@@ -49,9 +47,19 @@ class StorageCtrl extends GetxController {
       );
     }
     isLoadingGet = false.obs;
+    update();
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> users() async {
     return await firestore.collection('users').get();
+  }
+
+  RxMap<dynamic, dynamic> userDetails = {}.obs;
+  Future getPrefData() async {
+    SharedPreferences storage = await SharedPreferences.getInstance();
+    userDetails['name'] = storage.getString('name');
+    userDetails['email'] = storage.getString('email');
+    userDetails['uid'] = storage.getString('uid');
+    update();
   }
 }
