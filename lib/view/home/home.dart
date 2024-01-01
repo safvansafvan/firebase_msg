@@ -22,7 +22,6 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
@@ -52,14 +51,21 @@ class _HomeViewState extends State<HomeView> {
                 )),
               ),
               Container(
-                  margin: const EdgeInsets.only(top: 100),
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                  child: Obx(
-                    () => ListView.builder(
+                margin: const EdgeInsets.only(top: 100),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Obx(() {
+                  if (sc.isLoadingGet.isTrue) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return ListView.builder(
                       itemCount: sc.allUsers.length,
                       itemBuilder: (context, index) {
                         final allUsers = sc.allUsers[index];
@@ -80,11 +86,14 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             subtitle: Text(allUsers.email),
                             trailing: const Text('Date'),
+                            onTap: () {},
                           ),
                         );
                       },
-                    ),
-                  ))
+                    );
+                  }
+                }),
+              )
             ],
           ),
         ),

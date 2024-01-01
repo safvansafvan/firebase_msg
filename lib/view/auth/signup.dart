@@ -2,7 +2,7 @@ import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/controller/getx/connectivity_controller.dart';
 import 'package:firebase_msg/controller/utils/msg_bar.dart';
 import 'package:firebase_msg/view/auth/signin.dart';
-import 'package:firebase_msg/view/home.dart';
+import 'package:firebase_msg/view/home/home.dart';
 import 'package:firebase_msg/view/widget/text_form_common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -131,7 +131,9 @@ class SignUpView extends StatelessWidget {
                           TextSpan(
                               text: "SignIn",
                               style: TextStyle(
-                                  fontSize: 16, color: Colors.deepPurple))
+                                  fontSize: 16,
+                                  color: Colors.deepPurple,
+                                  fontWeight: FontWeight.w700))
                         ])),
                       )
                     ],

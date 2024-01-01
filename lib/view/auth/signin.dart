@@ -101,7 +101,11 @@ class LoginView extends StatelessWidget {
                                     alignment: Alignment.topRight,
                                     child: TextButton(
                                       onPressed: () {
-                                        showModelBottomSheet(context);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ForgotPassword()));
                                       },
                                       child: const Text(
                                         'Forgot password ?',
@@ -139,9 +143,12 @@ class LoginView extends StatelessWidget {
                               style:
                                   TextStyle(fontSize: 16, color: Colors.black)),
                           TextSpan(
-                              text: "SignUp",
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.deepPurple))
+                            text: "SignUp",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.deepPurple,
+                                fontWeight: FontWeight.w700),
+                          )
                         ])),
                       )
                     ],
@@ -167,7 +174,11 @@ class LoginView extends StatelessWidget {
       String password = sc.passCtrl.text;
       await sc
           .signInWithEmailAndPasswords(email, password, context)
-          .then((value) => sc.clearController());
+          .then((value) {
+        sc.clearController();
+        email = '';
+        password = '';
+      });
     }
   }
 }

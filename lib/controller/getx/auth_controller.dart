@@ -1,10 +1,9 @@
 import 'dart:developer';
-
 import 'package:firebase_msg/controller/getx/storage_ctrl.dart';
 import 'package:firebase_msg/controller/utils/msg_bar.dart';
 import 'package:firebase_msg/model/user_model.dart';
 import 'package:firebase_msg/view/auth/signin.dart';
-import 'package:firebase_msg/view/home.dart';
+import 'package:firebase_msg/view/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -92,7 +91,6 @@ class AuthCtrl extends GetxController {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: forgotPasswordCtrl.text.trim())
           .then((value) {
-        Navigator.pop(context);
         forgotPasswordCtrl.clear();
         showMsgBar(msg: 'Check Email Inbox');
       });

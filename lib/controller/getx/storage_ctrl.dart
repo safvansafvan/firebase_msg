@@ -29,7 +29,9 @@ class StorageCtrl extends GetxController {
     }
   }
 
+  RxBool isLoadingGet = false.obs;
   Future<void> getAllUsers() async {
+    isLoadingGet = true.obs;
     QuerySnapshot<Map<String, dynamic>> querySnapshot = await users();
     allUsers.clear();
     for (QueryDocumentSnapshot<Map<String, dynamic>> document
@@ -46,6 +48,7 @@ class StorageCtrl extends GetxController {
         ),
       );
     }
+    isLoadingGet = false.obs;
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> users() async {
