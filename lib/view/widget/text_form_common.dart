@@ -22,8 +22,8 @@ class TextFormFieldCmn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ctrl = Get.put(AuthCtrl());
-    final suffix = Get.put(AuthCtrl().passwordVisible.value);
+    final authController = Get.find<AuthController>();
+    final suffix = authController.passwordVisible;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: TextFormField(
@@ -47,7 +47,7 @@ class TextFormFieldCmn extends StatelessWidget {
                 ? IconButton(
                     splashRadius: 4,
                     onPressed: () {
-                      ctrl.showPassword();
+                      authController.showPassword();
                     },
                     icon: suffix
                         ? const Icon(Icons.visibility_off)
