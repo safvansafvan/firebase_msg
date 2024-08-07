@@ -1,6 +1,5 @@
 import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/utils/app_lottie_view.dart';
-import 'package:firebase_msg/view/landing_screen/landing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
