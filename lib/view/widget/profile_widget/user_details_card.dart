@@ -1,7 +1,10 @@
 import 'package:firebase_msg/theme/colors.dart';
+import 'package:firebase_msg/utils/rive_icon.dart';
 import 'package:firebase_msg/utils/vibrate.dart';
 import 'package:firebase_msg/view/widget/profile_widget/upate_profile_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:rive_animated_icon/rive_animated_icon.dart';
 
 class UserCard extends StatelessWidget {
   const UserCard({
@@ -26,48 +29,61 @@ class UserCard extends StatelessWidget {
               Colors.black,
             ]),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.grey[400],
-                radius: 50,
+      child: AnimationLimiter(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: AnimationConfiguration.toStaggeredList(
+            duration: const Duration(milliseconds: 400),
+            childAnimationBuilder: (widget) => ScaleAnimation(
+              child: FadeInAnimation(
+                child: widget,
               ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: InkWell(
-                  onTap: () async {
-                    phoneVibration();
-                    await updateProfileBottomSheet(context);
-                  },
-                  child: const CircleAvatar(
-                    radius: 17,
-                    child: Icon(Icons.camera_alt_outlined),
+            ),
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.grey[400],
+                    radius: 50,
                   ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: InkWell(
+                      onTap: () async {
+                        phoneVibration();
+                        await updateProfileBottomSheet(context);
+                      },
+                      child: CircleAvatar(
+                        radius: 17,
+                        child: showRiveIcon(
+                            icon: RiveIcon.edit, color: Colors.white70),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  'Safvan Mhd',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: Colors.white),
                 ),
-              )
+              ),
+              const Text(
+                'saju@gmail.com',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Colors.white),
+              ),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              'Safvan Mhd',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  color: Colors.white),
-            ),
-          ),
-          const Text(
-            'saju@gmail.com',
-            style: TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white),
-          ),
-        ],
+        ),
       ),
     );
   }

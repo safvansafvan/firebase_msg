@@ -1,6 +1,6 @@
 import 'package:firebase_msg/controller/getx/global_controller.dart';
-import 'package:firebase_msg/theme/colors.dart';
 import 'package:firebase_msg/utils/app_bottom_nav.dart';
+import 'package:firebase_msg/utils/rive_icon.dart';
 import 'package:firebase_msg/view/home/screens/home_chat.dart';
 import 'package:firebase_msg/view/home/screens/new_chat.dart';
 import 'package:firebase_msg/view/home/screens/settings.dart';
@@ -32,16 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: RiveAnimatedIcon(
-              riveIcon: RiveIcon.bell,
-              width: 30,
-              height: 30,
-              color: profileGr1,
-              strokeWidth: 10,
-              loopAnimation: true,
-            ),
-          ),
+              padding: const EdgeInsets.only(right: 16),
+              child: showRiveIcon(icon: RiveIcon.bell)),
         ],
       ),
       body: GetBuilder<GlobalController>(

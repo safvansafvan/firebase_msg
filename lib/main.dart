@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/controller/getx/connectivity_controller.dart';
 import 'package:firebase_msg/controller/getx/global_controller.dart';
-import 'package:firebase_msg/view/auth/login/login.dart';
 import 'package:firebase_msg/view/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

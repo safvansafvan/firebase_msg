@@ -1,6 +1,8 @@
 import 'package:firebase_msg/theme/colors.dart';
+import 'package:firebase_msg/utils/scroll_behaviou.dart';
 import 'package:firebase_msg/utils/vibrate.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class SettingsFields extends StatelessWidget {
   const SettingsFields({super.key});
@@ -8,70 +10,83 @@ class SettingsFields extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: SingleChildScrollView(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        scrollDirection: Axis.vertical,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20, bottom: 10),
-          child: Column(
-            children: [
-              CardWidget(
-                icon: Icons.privacy_tip_outlined,
-                label: 'Privacy',
-                tap: () {
-                  phoneVibration();
-                },
+      child: ScrollConfiguration(
+        behavior: NoGlowScrollBehavior(),
+        child: SingleChildScrollView(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          scrollDirection: Axis.vertical,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 10),
+            child: AnimationLimiter(
+              child: Column(
+                children: AnimationConfiguration.toStaggeredList(
+                  duration: const Duration(milliseconds: 400),
+                  childAnimationBuilder: (widget) => ScaleAnimation(
+                    child: FadeInAnimation(
+                      child: widget,
+                    ),
+                  ),
+                  children: [
+                    CardWidget(
+                      icon: Icons.privacy_tip_outlined,
+                      label: 'Privacy',
+                      tap: () {
+                        phoneVibration();
+                      },
+                    ),
+                    CardWidget(
+                      icon: Icons.chat_bubble_outline_outlined,
+                      label: 'Clear Chat',
+                      tap: () {
+                        phoneVibration();
+                      },
+                      isRedText: true,
+                    ),
+                    const CardWidget(
+                      icon: Icons.notifications_active_outlined,
+                      label: 'Notification',
+                      action: true,
+                    ),
+                    CardWidget(
+                      icon: Icons.help_outline_outlined,
+                      label: 'Help',
+                      tap: () {
+                        phoneVibration();
+                      },
+                    ),
+                    CardWidget(
+                      icon: Icons.group_outlined,
+                      label: 'Invite Friends',
+                      tap: () {
+                        phoneVibration();
+                      },
+                    ),
+                    CardWidget(
+                      icon: Icons.account_circle_outlined,
+                      label: 'Delete Account',
+                      tap: () {
+                        phoneVibration();
+                      },
+                      isRedText: true,
+                    ),
+                    CardWidget(
+                      icon: Icons.info_outline,
+                      label: 'About',
+                      tap: () {
+                        phoneVibration();
+                      },
+                    ),
+                    CardWidget(
+                      icon: Icons.logout_outlined,
+                      label: 'Logout',
+                      tap: () {
+                        phoneVibration();
+                      },
+                    ),
+                  ],
+                ),
               ),
-              CardWidget(
-                icon: Icons.chat_bubble_outline_outlined,
-                label: 'Clear Chat',
-                tap: () {
-                  phoneVibration();
-                },
-                isRedText: true,
-              ),
-              const CardWidget(
-                icon: Icons.notifications_active_outlined,
-                label: 'Notification',
-                action: true,
-              ),
-              CardWidget(
-                icon: Icons.help_outline_outlined,
-                label: 'Help',
-                tap: () {
-                  phoneVibration();
-                },
-              ),
-              CardWidget(
-                icon: Icons.group_outlined,
-                label: 'Invite Friends',
-                tap: () {
-                  phoneVibration();
-                },
-              ),
-              CardWidget(
-                icon: Icons.account_circle_outlined,
-                label: 'Delete Account',
-                tap: () {
-                  phoneVibration();
-                },
-                isRedText: true,
-              ),
-              CardWidget(
-                icon: Icons.info_outline,
-                label: 'About',
-                tap: () {
-                  phoneVibration();
-                },
-              ),
-              CardWidget(
-                icon: Icons.logout_outlined,
-                label: 'Logout',
-                tap: () {
-                  phoneVibration();
-                },
-              ),
-            ],
+            ),
           ),
         ),
       ),
