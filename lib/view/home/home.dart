@@ -1,10 +1,12 @@
 import 'package:firebase_msg/controller/getx/global_controller.dart';
+import 'package:firebase_msg/theme/colors.dart';
 import 'package:firebase_msg/utils/app_bottom_nav.dart';
 import 'package:firebase_msg/view/home/screens/home_chat.dart';
 import 'package:firebase_msg/view/home/screens/new_chat.dart';
 import 'package:firebase_msg/view/home/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rive_animated_icon/rive_animated_icon.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,6 +30,19 @@ class _HomeScreenState extends State<HomeScreen> {
             letterSpacing: 0.8,
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: RiveAnimatedIcon(
+              riveIcon: RiveIcon.bell,
+              width: 30,
+              height: 30,
+              color: profileGr1,
+              strokeWidth: 10,
+              loopAnimation: true,
+            ),
+          ),
+        ],
       ),
       body: GetBuilder<GlobalController>(
         builder: (controller) {

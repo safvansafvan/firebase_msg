@@ -1,9 +1,28 @@
+import 'package:firebase_msg/utils/vibrate.dart';
 import 'package:flutter/material.dart';
 
-class HomeChat extends StatelessWidget {
+class HomeChat extends StatefulWidget {
   const HomeChat({
     super.key,
   });
+
+  @override
+  State<HomeChat> createState() => _HomeChatState();
+}
+
+class _HomeChatState extends State<HomeChat> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.isScrollingNotifier.value) {
+      phoneVibration();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +51,7 @@ class HomeChat extends StatelessWidget {
           SizedBox(
             height: 100,
             child: ListView.builder(
+              controller: _scrollController,
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
