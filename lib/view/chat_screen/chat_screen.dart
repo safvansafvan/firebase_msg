@@ -1,0 +1,76 @@
+import 'package:firebase_msg/utils/rive_icon.dart';
+import 'package:firebase_msg/utils/vibrate.dart';
+import 'package:firebase_msg/view/widget/chat_widget/message_sending_card.dart';
+import 'package:firebase_msg/view/widget/chat_widget/own_chat_card.dart';
+import 'package:firebase_msg/view/widget/chat_widget/user_chat_card.dart';
+import 'package:flutter/material.dart';
+import 'package:rive_animated_icon/rive_animated_icon.dart';
+
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 5,
+        centerTitle: false,
+        leadingWidth: 35,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: InkWell(
+              highlightColor: Colors.transparent,
+              onTap: () {
+                phoneVibration();
+                Navigator.pop(context);
+              },
+              child: const Icon(Icons.chevron_left)),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.grey[300],
+              radius: 25,
+            ),
+            const SizedBox(width: 10),
+            const Text(
+              'User Name',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+          ],
+        ),
+        actions: [
+          showRiveIcon(icon: RiveIcon.call),
+          Padding(
+            padding: const EdgeInsets.only(right: 16, left: 10),
+            child: showRiveIcon(icon: RiveIcon.menuDots),
+          )
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return index.isEven
+                      ? const OwnChatCardWidget()
+                      : const UserChatCardWidget();
+                },
+              ),
+            ),
+          ),
+          const MessageSendingCard()
+        ],
+      ),
+    );
+  }
+}
