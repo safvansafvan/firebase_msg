@@ -1,4 +1,4 @@
-import 'package:firebase_msg/utils/scroll_behaviou.dart';
+import 'package:firebase_msg/utils/scroll_behavior.dart';
 import 'package:firebase_msg/view/widget/home_widget/users_chat_card.dart';
 import 'package:firebase_msg/view/widget/home_widget/users_profiles.dart';
 import 'package:flutter/material.dart';

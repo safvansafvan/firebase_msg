@@ -1,5 +1,5 @@
 import 'package:firebase_msg/theme/colors.dart';
-import 'package:firebase_msg/utils/scroll_behaviou.dart';
+import 'package:firebase_msg/utils/scroll_behavior.dart';
 import 'package:firebase_msg/utils/vibrate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -124,7 +124,7 @@ class _CardWidgetState extends State<CardWidget>
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _animation = Tween<double>(begin: 0.95, end: 1.1).animate(_controller);
+    _animation = Tween<double>(begin: 0.95, end: 1).animate(_controller);
   }
 
   @override

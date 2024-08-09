@@ -1,5 +1,5 @@
-import 'package:firebase_msg/view/widget/profile_widget/settings_fields.dart';
-import 'package:firebase_msg/view/widget/profile_widget/user_details_card.dart';
+import 'package:firebase_msg/view/widget/settings_widget/settings_fields.dart';
+import 'package:firebase_msg/view/widget/settings_widget/user_details_card.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatelessWidget {
@@ -7,7 +7,7 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [UserCard(), SettingsFields()],
     );
   }

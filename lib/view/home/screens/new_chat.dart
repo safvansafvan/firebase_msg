@@ -1,4 +1,4 @@
-import 'package:firebase_msg/utils/scroll_behaviou.dart';
+import 'package:firebase_msg/utils/scroll_behavior.dart';
 import 'package:firebase_msg/view/widget/new_chat_widget/new_chat_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
