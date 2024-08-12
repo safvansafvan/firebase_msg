@@ -3,7 +3,7 @@ import 'package:firebase_msg/theme/colors.dart';
 import 'package:firebase_msg/utils/app_button.dart';
 import 'package:firebase_msg/utils/vibrate.dart';
 import 'package:firebase_msg/view/auth/signUp/signup_stage_two.dart';
-import 'package:firebase_msg/view/widget/auth/login_text_form_field.dart';
+import 'package:firebase_msg/view/widget/auth_widget/login_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';

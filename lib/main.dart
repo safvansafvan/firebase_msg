@@ -1,10 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/controller/getx/connectivity_controller.dart';
+import 'package:firebase_msg/controller/getx/global_controller.dart';
+import 'package:firebase_msg/controller/getx/message_sending_controller.dart';
 import 'package:firebase_msg/view/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'chat app',
       theme: ThemeData(
+        fontFamily: GoogleFonts.poppins().fontFamily,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
@@ -44,5 +48,7 @@ class InitControllers {
   static init() {
     Get.put(AuthController());
     Get.put(ConnectivityController());
+    Get.put(GlobalController());
+    Get.put(MessageSendingController());
   }
 }
