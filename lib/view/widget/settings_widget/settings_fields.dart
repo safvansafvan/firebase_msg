@@ -2,7 +2,9 @@ import 'package:firebase_msg/theme/colors.dart';
 import 'package:firebase_msg/utils/scroll_behavior.dart';
 import 'package:firebase_msg/utils/vibrate.dart';
 import 'package:firebase_msg/view/help_screen/help_screen.dart';
+import 'package:firebase_msg/view/invite_firends_screen/invite_friends_screen.dart';
 import 'package:firebase_msg/view/legal_screen/legal_screen.dart';
+import 'package:firebase_msg/view/sounds_screen/sounds_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -49,10 +51,16 @@ class SettingsFields extends StatelessWidget {
                       },
                       isRedText: true,
                     ),
-                    const CardWidget(
-                      icon: Icons.notifications_active_outlined,
-                      label: 'Notification',
-                      action: true,
+                    CardWidget(
+                      icon: Icons.surround_sound,
+                      label: 'Genaral',
+                      tap: () {
+                        phoneVibration();
+                        Get.to(() => const GenaralScreen(),
+                            curve: Curves.easeInOut,
+                            duration: const Duration(milliseconds: 400),
+                            transition: Transition.rightToLeft);
+                      },
                     ),
                     CardWidget(
                       icon: Icons.help_outline_outlined,
@@ -70,6 +78,10 @@ class SettingsFields extends StatelessWidget {
                       label: 'Invite Friends',
                       tap: () {
                         phoneVibration();
+                        Get.to(() => const InviteFriendsScreen(),
+                            curve: Curves.easeInOut,
+                            duration: const Duration(milliseconds: 400),
+                            transition: Transition.rightToLeft);
                       },
                     ),
                     CardWidget(
@@ -172,7 +184,8 @@ class _CardWidgetState extends State<CardWidget>
         scale: _animation,
         child: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: 30, vertical: widget.action == true ? 0 : 16),
+              horizontal: widget.action == true ? 16 : 30,
+              vertical: widget.action == true ? 0 : 16),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -12,13 +12,14 @@ class LegalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: helpBg,
+      backgroundColor: settingsBg,
       appBar: AppBar(
         titleSpacing: 0,
-        backgroundColor: helpBg,
+        backgroundColor: settingsBg,
         leading: IconButton(
           splashRadius: 20,
           onPressed: () {
+            phoneVibration();
             Navigator.pop(context);
           },
           icon: const Icon(Icons.chevron_left),

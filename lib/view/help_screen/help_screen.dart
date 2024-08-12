@@ -1,4 +1,5 @@
 import 'package:firebase_msg/theme/colors.dart';
+import 'package:firebase_msg/utils/vibrate.dart';
 import 'package:firebase_msg/view/widget/help_widget/help_card.dart';
 import 'package:flutter/material.dart';
 import 'package:rive_animated_icon/rive_animated_icon.dart';
@@ -9,13 +10,14 @@ class HelpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: helpBg,
+      backgroundColor: settingsBg,
       appBar: AppBar(
         titleSpacing: 0,
-        backgroundColor: helpBg,
+        backgroundColor: settingsBg,
         leading: IconButton(
           splashRadius: 20,
           onPressed: () {
+            phoneVibration();
             Navigator.pop(context);
           },
           icon: const Icon(Icons.chevron_left),

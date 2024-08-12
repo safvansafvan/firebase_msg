@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_msg/controller/getx/auth_controller.dart';
 import 'package:firebase_msg/controller/getx/connectivity_controller.dart';
+import 'package:firebase_msg/controller/getx/genaral_controller.dart';
 import 'package:firebase_msg/controller/getx/global_controller.dart';
 import 'package:firebase_msg/controller/getx/message_sending_controller.dart';
 import 'package:firebase_msg/view/splash/splash_screen.dart';
@@ -50,5 +51,6 @@ class InitControllers {
     Get.put(ConnectivityController());
     Get.put(GlobalController());
     Get.put(MessageSendingController());
+    Get.put(GenaralController());
   }
 }
