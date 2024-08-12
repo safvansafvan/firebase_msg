@@ -41,33 +41,33 @@ class UserCard extends StatelessWidget {
               ),
             ),
             children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.grey[300],
-                    radius: 50,
-                    child: const AppLottieView(
-                      path: 'assets/lotties/profile_image.json',
-                      repeat: true,
+              GestureDetector(
+                onTap: () async {
+                  phoneVibration();
+                  await updateProfileBottomSheet(context);
+                },
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.grey[300],
+                      radius: 50,
+                      child: const AppLottieView(
+                        path: 'assets/lotties/profile_image.json',
+                        repeat: true,
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: InkWell(
-                      onTap: () async {
-                        phoneVibration();
-                        await updateProfileBottomSheet(context);
-                      },
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
                       child: CircleAvatar(
                         radius: 17,
                         child: showRiveIcon(
                             icon: RiveIcon.edit, color: Colors.white70),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),

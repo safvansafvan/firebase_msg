@@ -1,8 +1,12 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:firebase_msg/controller/getx/message_sending_controller.dart';
 import 'package:firebase_msg/theme/colors.dart';
+import 'package:firebase_msg/utils/app_lottie_view.dart';
+import 'package:firebase_msg/utils/rive_icon.dart';
+import 'package:firebase_msg/utils/show_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rive_animated_icon/rive_animated_icon.dart';
 
 class MessageSendingCard extends StatefulWidget {
   const MessageSendingCard({
@@ -98,7 +102,12 @@ class _MessageSendingCardState extends State<MessageSendingCard> {
                 ),
                 IconButton(
                     splashRadius: 20,
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (controller.isEmojiPickerVisible) {
+                        controller.disableEmojiState();
+                        await showRecordingAudio(context);
+                      }
+                    },
                     icon: const Icon(Icons.mic_none_outlined)),
                 CircleAvatar(
                   backgroundColor: ownChatCard,
@@ -118,4 +127,68 @@ class _MessageSendingCardState extends State<MessageSendingCard> {
       );
     });
   }
+}
+
+Future<void> showRecordingAudio(BuildContext context) async {
+  await showAppBottomSheet(
+    transparent: true,
+    context: context,
+    isDismissible: false,
+    child: ColoredBox(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: AppLottieView(
+                  path: 'assets/lotties/recording.json',
+                  repeat: true,
+                  width: context.width),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: showRiveIcon(
+                      icon: RiveIcon.bin,
+                      color: Colors.red[800],
+                    ),
+                  ),
+                  const Text(
+                    '1:00',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: ownChatCard,
+                      radius: 20,
+                      child: Center(
+                        child: Image.asset(
+                          color: Colors.white,
+                          'assets/icons/send.png',
+                          height: 18,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    ),
+  );
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 Future<void> updateProfileBottomSheet(BuildContext context) async {
   await showAppBottomSheet(
-      context,
-      Padding(
+      context: context,
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

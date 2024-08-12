@@ -2,10 +2,15 @@ import 'package:firebase_msg/controller/getx/global_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Future<void> showAppBottomSheet(BuildContext context, Widget child) async {
+Future<void> showAppBottomSheet(
+    {required BuildContext context,
+    required Widget child,
+    bool? isDismissible,
+    bool? transparent}) async {
   await showModalBottomSheet(
     elevation: 10,
-    isDismissible: true,
+    barrierColor: transparent == true ? Colors.transparent : null,
+    isDismissible: isDismissible ?? true,
     sheetAnimationStyle: AnimationStyle(
         curve: Curves.ease,
         duration: const Duration(milliseconds: 500),

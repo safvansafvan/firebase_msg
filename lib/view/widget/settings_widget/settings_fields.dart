@@ -1,8 +1,11 @@
 import 'package:firebase_msg/theme/colors.dart';
 import 'package:firebase_msg/utils/scroll_behavior.dart';
 import 'package:firebase_msg/utils/vibrate.dart';
+import 'package:firebase_msg/view/help_screen/help_screen.dart';
+import 'package:firebase_msg/view/legal_screen/legal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get/get.dart';
 
 class SettingsFields extends StatelessWidget {
   const SettingsFields({super.key});
@@ -29,9 +32,13 @@ class SettingsFields extends StatelessWidget {
                   children: [
                     CardWidget(
                       icon: Icons.privacy_tip_outlined,
-                      label: 'Privacy',
+                      label: 'Legal',
                       tap: () {
                         phoneVibration();
+                        Get.to(() => const LegalScreen(),
+                            curve: Curves.easeInOut,
+                            duration: const Duration(milliseconds: 400),
+                            transition: Transition.rightToLeft);
                       },
                     ),
                     CardWidget(
@@ -52,6 +59,10 @@ class SettingsFields extends StatelessWidget {
                       label: 'Help',
                       tap: () {
                         phoneVibration();
+                        Get.to(() => const HelpScreen(),
+                            curve: Curves.easeInOut,
+                            duration: const Duration(milliseconds: 400),
+                            transition: Transition.rightToLeft);
                       },
                     ),
                     CardWidget(

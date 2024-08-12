@@ -1,5 +1,6 @@
 import 'package:firebase_msg/controller/getx/message_sending_controller.dart';
 import 'package:firebase_msg/utils/rive_icon.dart';
+import 'package:firebase_msg/utils/scroll_behavior.dart';
 import 'package:firebase_msg/utils/vibrate.dart';
 import 'package:firebase_msg/view/widget/chat_widget/message_sending_card.dart';
 import 'package:firebase_msg/view/widget/chat_widget/own_chat_card.dart';
@@ -66,13 +67,16 @@ class _ChatScreenState extends State<ChatScreen> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return index.isEven
-                        ? const OwnChatCardWidget()
-                        : const UserChatCardWidget();
-                  },
+                child: ScrollConfiguration(
+                  behavior: NoGlowScrollBehavior(),
+                  child: ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return index.isEven
+                          ? const OwnChatCardWidget()
+                          : const UserChatCardWidget();
+                    },
+                  ),
                 ),
               ),
             ),
