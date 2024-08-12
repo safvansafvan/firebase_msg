@@ -1,5 +1,6 @@
 import 'package:firebase_msg/theme/colors.dart';
 import 'package:firebase_msg/utils/vibrate.dart';
+import 'package:firebase_msg/view/legal_screen/screens/about_us.dart';
 import 'package:firebase_msg/view/legal_screen/screens/privacy_screen.dart';
 import 'package:firebase_msg/view/legal_screen/screens/terms_conditions.dart';
 import 'package:firebase_msg/view/widget/legal_widget/legal_card.dart';
@@ -54,6 +55,18 @@ class LegalScreen extends StatelessWidget {
               tap: () {
                 phoneVibration();
                 Get.to(() => const TermsConditionsScreen(),
+                    curve: Curves.easeInOut,
+                    duration: const Duration(milliseconds: 400),
+                    transition: Transition.rightToLeft);
+              },
+            ),
+            LegalCard(
+              icon: Icons.info_outline,
+              title: 'About Us',
+              subtitle: 'About',
+              tap: () {
+                phoneVibration();
+                Get.to(() => const AboutUsScreen(),
                     curve: Curves.easeInOut,
                     duration: const Duration(milliseconds: 400),
                     transition: Transition.rightToLeft);

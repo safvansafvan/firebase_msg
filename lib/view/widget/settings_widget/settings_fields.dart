@@ -4,7 +4,10 @@ import 'package:firebase_msg/utils/vibrate.dart';
 import 'package:firebase_msg/view/help_screen/help_screen.dart';
 import 'package:firebase_msg/view/invite_firends_screen/invite_friends_screen.dart';
 import 'package:firebase_msg/view/legal_screen/legal_screen.dart';
-import 'package:firebase_msg/view/sounds_screen/sounds_screen.dart';
+import 'package:firebase_msg/view/genaral_screen/genaral_screen.dart';
+import 'package:firebase_msg/view/widget/settings_widget/clear_chats_sheet.dart';
+import 'package:firebase_msg/view/widget/settings_widget/delete_account_sheet.dart';
+import 'package:firebase_msg/view/widget/settings_widget/logout_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -48,6 +51,7 @@ class SettingsFields extends StatelessWidget {
                       label: 'Clear Chat',
                       tap: () {
                         phoneVibration();
+                        clearBottomSheetWidget(context);
                       },
                       isRedText: true,
                     ),
@@ -89,21 +93,16 @@ class SettingsFields extends StatelessWidget {
                       label: 'Delete Account',
                       tap: () {
                         phoneVibration();
+                        deleteBottomSheetWidget(context);
                       },
                       isRedText: true,
-                    ),
-                    CardWidget(
-                      icon: Icons.info_outline,
-                      label: 'About',
-                      tap: () {
-                        phoneVibration();
-                      },
                     ),
                     CardWidget(
                       icon: Icons.logout_outlined,
                       label: 'Logout',
                       tap: () {
                         phoneVibration();
+                        logoutBottomSheetWidget(context);
                       },
                     ),
                   ],
