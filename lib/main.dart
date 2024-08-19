@@ -4,6 +4,7 @@ import 'package:firebase_msg/controller/getx/connectivity_controller.dart';
 import 'package:firebase_msg/controller/getx/genaral_controller.dart';
 import 'package:firebase_msg/controller/getx/global_controller.dart';
 import 'package:firebase_msg/controller/getx/message_sending_controller.dart';
+import 'package:firebase_msg/controller/getx/user_profile_controller.dart';
 import 'package:firebase_msg/view/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,5 +53,6 @@ class InitControllers {
     Get.put(GlobalController());
     Get.put(MessageSendingController());
     Get.put(GenaralController());
+    Get.put(UserProfileController());
   }
 }

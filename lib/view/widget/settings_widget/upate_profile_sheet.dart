@@ -1,5 +1,8 @@
+import 'package:firebase_msg/controller/getx/user_profile_controller.dart';
 import 'package:firebase_msg/utils/show_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 Future<void> updateProfileBottomSheet(BuildContext context) async {
   await showAppBottomSheet(
@@ -33,7 +36,9 @@ Future<void> updateProfileBottomSheet(BuildContext context) async {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      await Get.find<UserProfileController>().takeCameraImage();
+                    },
                     child: Column(
                       children: [
                         SizedBox(
@@ -52,7 +57,10 @@ Future<void> updateProfileBottomSheet(BuildContext context) async {
                   ),
                   const SizedBox(width: 30),
                   InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      await Get.find<UserProfileController>()
+                          .pickGalleryImage();
+                    },
                     child: Column(
                       children: [
                         SizedBox(

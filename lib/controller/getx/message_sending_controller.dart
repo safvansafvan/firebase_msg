@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:firebase_msg/utils/show_toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 
 class MessageSendingController extends GetxController {
@@ -30,20 +34,36 @@ class MessageSendingController extends GetxController {
   }
 
   void disableEmojiState() {
-    isEmojiPickerVisible = false;
-    update();
-  }
-
-  Future<void> recordAudio() async {
-    final record = AudioRecorder();
-    if (await record.hasPermission()) {
-      await record.start(const RecordConfig(), path: 'recoding/chatify.m4a');
-      final stream = await record
-          .startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
+    if (isEmojiPickerVisible == true) {
+      isEmojiPickerVisible = false;
+      update();
     }
   }
 
-  Future<void> storeRecordings() async {
+  Future<bool> requestMicrophonePermission() async {
+    final status = await Permission.microphone.request();
+    return status.isGranted;
+  }
+
+  Future<bool> recordAudio() async {
+    try {
+      bool hasPermission = await requestMicrophonePermission();
+      final record = AudioRecorder();
+      if (hasPermission) {
+        await record.start(const RecordConfig(), path: 'recoding/chatify.m4a');
+        return true;
+      } else {
+        appSnackBarWidget(
+            title: 'Error', message: 'Please Enable App Need Permissions');
+        return false;
+      }
+    } catch (e) {
+      log(e.toString());
+      return false;
+    }
+  }
+
+  Future<void> stopRecordings() async {
     final record = AudioRecorder();
     final path = await record.stop();
     await record.cancel();

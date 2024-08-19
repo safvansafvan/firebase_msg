@@ -57,8 +57,8 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           actions: [
             showRiveIcon(icon: RiveIcon.call),
-            Padding(
-                padding: const EdgeInsets.only(right: 16, left: 10),
+            const Padding(
+                padding: EdgeInsets.only(right: 16, left: 10),
                 child: ChatPopUpMenu())
           ],
         ),

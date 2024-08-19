@@ -70,7 +70,7 @@ class _MessageSendingCardState extends State<MessageSendingCard> {
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             child: Row(
               children: [
-                Wrap(
+                Row(
                   children: [
                     IconButton(
                       splashRadius: 20,
@@ -105,7 +105,10 @@ class _MessageSendingCardState extends State<MessageSendingCard> {
                     onPressed: () async {
                       if (controller.isEmojiPickerVisible) {
                         controller.disableEmojiState();
-                        await showRecordingAudio(context);
+                      }
+                      bool status = await controller.recordAudio();
+                      if (status) {
+                        await showRecordingAudio();
                       }
                     },
                     icon: const Icon(Icons.mic_none_outlined)),
@@ -127,68 +130,69 @@ class _MessageSendingCardState extends State<MessageSendingCard> {
       );
     });
   }
-}
 
-Future<void> showRecordingAudio(BuildContext context) async {
-  await showAppBottomSheet(
-    transparent: true,
-    context: context,
-    isDismissible: false,
-    child: ColoredBox(
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: AppLottieView(
-                  path: 'assets/lotties/recording.json',
-                  repeat: true,
-                  width: context.width),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: showRiveIcon(
-                      icon: RiveIcon.bin,
-                      color: Colors.red[800],
-                    ),
-                  ),
-                  const Text(
-                    '1:00',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: ownChatCard,
-                      radius: 20,
-                      child: Center(
-                        child: Image.asset(
-                          color: Colors.white,
-                          'assets/icons/send.png',
-                          height: 18,
-                        ),
+  Future<void> showRecordingAudio() async {
+    await showAppBottomSheet(
+      transparent: true,
+      context: context,
+      isDismissible: false,
+      child: ColoredBox(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: AppLottieView(
+                    path: 'assets/lotties/recording.json',
+                    repeat: true,
+                    width: context.width),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16)
+                    .copyWith(top: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.delete_outline_rounded,
+                        color: Colors.red[800],
                       ),
                     ),
-                  )
-                ],
-              ),
-            )
-          ],
+                    const Text(
+                      '1:00',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: ownChatCard,
+                        radius: 20,
+                        child: Center(
+                          child: Image.asset(
+                            color: Colors.white,
+                            'assets/icons/send.png',
+                            height: 18,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
